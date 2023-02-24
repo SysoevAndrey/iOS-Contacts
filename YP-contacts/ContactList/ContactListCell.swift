@@ -10,11 +10,27 @@ import UIKit
 final class ContactListCell: UITableViewCell {
     // MARK: - Layout
     
+    private let capsuleView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = 24
+        view.backgroundColor = .black
+        return view
+    }()
     private let contactImage: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = 24
+        imageView.clipsToBounds = true
         return imageView
+    }()
+    private let contactName: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 30, weight: .medium)
+        label.textColor = .white
+        label.lineBreakMode = .byTruncatingTail
+        return label
     }()
     
     // MARK: - Properties
@@ -37,26 +53,42 @@ final class ContactListCell: UITableViewCell {
     
     func configureCell(with contact: Contact) {
         contactImage.image = contact.image
+        contactName.text = "\(contact.givenName) \(contact.familyName)"
     }
 }
 
 private extension ContactListCell {
     func setupContent() {
-        self.backgroundColor = .fullBlack
-        contentView.backgroundColor = .black
-        contentView.layer.cornerRadius = 24
+        contentView.backgroundColor = .fullBlack
+        contentView.addSubview(capsuleView)
         contentView.addSubview(contactImage)
+        contentView.addSubview(contactName)
     }
     
     func setupConstraints() {
+        let capsuleViewConstraints = [
+            capsuleView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            capsuleView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 2),
+            capsuleView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            capsuleView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -2),
+        ]
         let contactImageConstraints = [
-            contactImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
-            contactImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
-            contactImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
+            contactImage.leadingAnchor.constraint(equalTo: capsuleView.leadingAnchor, constant: 12),
+            contactImage.topAnchor.constraint(equalTo: capsuleView.topAnchor, constant: 12),
+            contactImage.bottomAnchor.constraint(equalTo: capsuleView.bottomAnchor, constant: -12),
             contactImage.widthAnchor.constraint(equalToConstant: 96),
             contactImage.heightAnchor.constraint(equalTo: contactImage.widthAnchor)
         ]
+        let contactNameConstraints = [
+            contactName.leadingAnchor.constraint(equalTo: contactImage.trailingAnchor, constant: 12),
+            contactName.topAnchor.constraint(equalTo: capsuleView.topAnchor, constant: 12),
+            contactName.trailingAnchor.constraint(equalTo: capsuleView.trailingAnchor, constant: -12)
+        ]
         
-        NSLayoutConstraint.activate(contactImageConstraints)
+        NSLayoutConstraint.activate(
+            capsuleViewConstraints +
+            contactImageConstraints +
+            contactNameConstraints
+        )
     }
 }

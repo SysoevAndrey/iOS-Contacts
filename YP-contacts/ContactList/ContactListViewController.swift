@@ -34,6 +34,8 @@ class ContactListViewController: UIViewController {
         let table = UITableView()
         table.translatesAutoresizingMaskIntoConstraints = false
         table.separatorStyle = .none
+        table.backgroundColor = .fullBlack
+        table.contentInset = UIEdgeInsets(top: 22, left: 0, bottom: 0, right: 0)
         return table
     }()
     
@@ -57,6 +59,12 @@ class ContactListViewController: UIViewController {
             self?.contacts = loadedContacts
             self?.contactsTable.reloadData()
         }
+    }
+    
+    // MARK: - Overriden
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .lightContent
     }
 }
 
@@ -84,7 +92,7 @@ private extension ContactListViewController {
         ]
         let contactsTableConstraints = [
             contactsTable.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            contactsTable.topAnchor.constraint(equalTo: contactsLabel.bottomAnchor, constant: 24),
+            contactsTable.topAnchor.constraint(equalTo: contactsLabel.bottomAnchor, constant: 8),
             contactsTable.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             contactsTable.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ]

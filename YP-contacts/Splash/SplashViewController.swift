@@ -49,6 +49,12 @@ final class SplashViewController: UIViewController {
         }
     }
     
+    // MARK: - Overriden
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .lightContent
+    }
+    
     // MARK: - Actions
     
     @objc private func goToSettings() {
