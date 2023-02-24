@@ -16,10 +16,22 @@ struct Contact {
     let socials: Set<Social>
 }
 
-enum Social: String {
+enum Social: String, Comparable {
     case telegram = "Telegram"
-    case whatsApp = "‎WhatsApp"
-    case viber = "Viber,"
-    case signal = "Signal,"
+    case whatsApp = "WhatsApp"
+    case viber = "Viber"
+    case signal = "Signal"
     case threema = "Threema"
+    
+    static func < (lhs: Social, rhs: Social) -> Bool {
+        let order: [Social: Int] = [
+            .telegram: 0,
+            .whatsApp: 1,
+            .viber: 2,
+            .signal: 3,
+            .threema: 4
+        ]
+        
+        return order[rhs] ?? -1 < order[lhs] ?? -1
+    }
 }

@@ -24,13 +24,25 @@ final class ContactListCell: UITableViewCell {
         imageView.clipsToBounds = true
         return imageView
     }()
-    private let contactName: UILabel = {
+    private let contactNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 30, weight: .medium)
         label.textColor = .white
         label.lineBreakMode = .byTruncatingTail
         return label
+    }()
+    private let contactPhoneLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .gray
+        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        return label
+    }()
+    private let contactSocialsStack: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
     }()
     
     // MARK: - Properties
@@ -49,11 +61,31 @@ final class ContactListCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        contactSocialsStack.arrangedSubviews.forEach { view in
+            view.removeFromSuperview()
+        }
+    }
+    
     // MARK: - Methods
     
     func configureCell(with contact: Contact) {
         contactImage.image = contact.image
-        contactName.text = "\(contact.givenName) \(contact.familyName)"
+        contactNameLabel.text = "\(contact.givenName) \(contact.familyName)"
+        contactPhoneLabel.text = contact.phone
+        
+        Array(contact.socials).sorted().forEach { social in
+            let image = UIImage(named: social.rawValue)
+            contactSocialsStack.insertArrangedSubview(UIImageView(image: image), at: 0)
+        }
+        
+        if contact.phone != nil {
+            contactSocialsStack.addArrangedSubview(UIImageView(image: UIImage(named: "Phone")))
+        }
+        
+        if contact.email != nil {
+            contactSocialsStack.addArrangedSubview(UIImageView(image: UIImage(named: "Email")))
+        }
     }
 }
 
@@ -62,7 +94,9 @@ private extension ContactListCell {
         contentView.backgroundColor = .fullBlack
         contentView.addSubview(capsuleView)
         contentView.addSubview(contactImage)
-        contentView.addSubview(contactName)
+        contentView.addSubview(contactNameLabel)
+        contentView.addSubview(contactPhoneLabel)
+        contentView.addSubview(contactSocialsStack)
     }
     
     func setupConstraints() {
@@ -80,15 +114,28 @@ private extension ContactListCell {
             contactImage.heightAnchor.constraint(equalTo: contactImage.widthAnchor)
         ]
         let contactNameConstraints = [
-            contactName.leadingAnchor.constraint(equalTo: contactImage.trailingAnchor, constant: 12),
-            contactName.topAnchor.constraint(equalTo: capsuleView.topAnchor, constant: 12),
-            contactName.trailingAnchor.constraint(equalTo: capsuleView.trailingAnchor, constant: -12)
+            contactNameLabel.leadingAnchor.constraint(equalTo: contactImage.trailingAnchor, constant: 12),
+            contactNameLabel.topAnchor.constraint(equalTo: contactImage.topAnchor),
+            contactNameLabel.trailingAnchor.constraint(equalTo: capsuleView.trailingAnchor, constant: -12)
+        ]
+        let contactPhoneLabelConstraints = [
+            contactPhoneLabel.leadingAnchor.constraint(equalTo: contactNameLabel.leadingAnchor),
+            contactPhoneLabel.topAnchor.constraint(equalTo: contactNameLabel.bottomAnchor, constant: 4),
+            contactPhoneLabel.trailingAnchor.constraint(equalTo: contactNameLabel.trailingAnchor)
+        ]
+        let contactSocialsStackConstraints = [
+            contactSocialsStack.leadingAnchor.constraint(equalTo: contactNameLabel.leadingAnchor),
+            contactSocialsStack.trailingAnchor.constraint(lessThanOrEqualTo: contactNameLabel.trailingAnchor),
+            contactSocialsStack.bottomAnchor.constraint(equalTo: contactImage.bottomAnchor),
+            contactSocialsStack.heightAnchor.constraint(equalToConstant: 24)
         ]
         
         NSLayoutConstraint.activate(
             capsuleViewConstraints +
             contactImageConstraints +
-            contactNameConstraints
+            contactNameConstraints +
+            contactPhoneLabelConstraints +
+            contactSocialsStackConstraints
         )
     }
 }
