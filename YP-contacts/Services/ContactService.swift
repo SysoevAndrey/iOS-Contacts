@@ -72,9 +72,13 @@ struct ContactService: ContactLoading {
                     )
                 }
                 
-                completion(contacts)
+                DispatchQueue.main.async {
+                    completion(contacts)
+                }
             } catch {
-                completion([])
+                DispatchQueue.main.async {
+                    completion([])
+                }
             }
         }
     }

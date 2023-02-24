@@ -8,7 +8,7 @@
 import UIKit
 
 class ContactListViewController: UIViewController {
-    // Layout
+    // MARK: - Layout
     
     private let contactsLabel: UILabel = {
         let label = UILabel()
@@ -18,34 +18,44 @@ class ContactListViewController: UIViewController {
         label.font = UIFont.systemFont(ofSize: 34, weight: .bold)
         return label
     }()
-    private let sortButton: UIButton = {
+    private lazy var sortButton: UIButton = {
         let button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(named: "Sort"), for: .normal)
         return button
     }()
-    private let filterButton: UIButton = {
+    private lazy var filterButton: UIButton = {
         let button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(named: "Filter"), for: .normal)
         return button
     }()
+    private let contactsTable: UITableView = {
+        let table = UITableView()
+        table.translatesAutoresizingMaskIntoConstraints = false
+        table.separatorStyle = .none
+        return table
+    }()
     
-    // Properties
+    // MARK: - Properties
     
     private let contactService: ContactLoading = ContactService()
     private var contacts = [Contact]()
     
-    // Lifecycle
+    // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        contactsTable.dataSource = self
+        contactsTable.register(ContactListCell.self, forCellReuseIdentifier: ContactListCell.reuseIdentifier)
         
         setupContent()
         setupConstraints()
         
         contactService.loadContacts { [weak self] loadedContacts in
             self?.contacts = loadedContacts
+            self?.contactsTable.reloadData()
         }
     }
 }
@@ -56,6 +66,7 @@ private extension ContactListViewController {
         view.addSubview(contactsLabel)
         view.addSubview(sortButton)
         view.addSubview(filterButton)
+        view.addSubview(contactsTable)
     }
     
     func setupConstraints() {
@@ -71,12 +82,39 @@ private extension ContactListViewController {
             filterButton.centerYAnchor.constraint(equalTo: contactsLabel.centerYAnchor),
             filterButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
         ]
+        let contactsTableConstraints = [
+            contactsTable.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            contactsTable.topAnchor.constraint(equalTo: contactsLabel.bottomAnchor, constant: 24),
+            contactsTable.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            contactsTable.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ]
         
         NSLayoutConstraint.activate(
             contactsLabelConstraints +
             sortButtonConstraints +
-            filterButtonConstraints
+            filterButtonConstraints +
+            contactsTableConstraints
         )
     }
 }
 
+// MARK: - UITableViewDataSource
+
+extension ContactListViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        contacts.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = contactsTable.dequeueReusableCell(withIdentifier: ContactListCell.reuseIdentifier, for: indexPath)
+        
+        guard let contactListCell = cell as? ContactListCell else {
+            return UITableViewCell()
+        }
+        
+        let contact = contacts[indexPath.row]
+        contactListCell.configureCell(with: contact)
+        
+        return contactListCell
+    }
+}

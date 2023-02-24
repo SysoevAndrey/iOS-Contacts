@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5540102729A8C7040023AD38 /* ContactListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5540102629A8C7040023AD38 /* ContactListCell.swift */; };
 		554FB90C29A775F800EAA48C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554FB90B29A775F800EAA48C /* AppDelegate.swift */; };
 		554FB90E29A775F800EAA48C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554FB90D29A775F800EAA48C /* SceneDelegate.swift */; };
 		554FB91029A775F800EAA48C /* ContactListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554FB90F29A775F800EAA48C /* ContactListViewController.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5540102629A8C7040023AD38 /* ContactListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListCell.swift; sourceTree = "<group>"; };
 		554FB90829A775F800EAA48C /* YP-contacts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "YP-contacts.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		554FB90B29A775F800EAA48C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		554FB90D29A775F800EAA48C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				554FB90F29A775F800EAA48C /* ContactListViewController.swift */,
+				5540102629A8C7040023AD38 /* ContactListCell.swift */,
 			);
 			path = ContactList;
 			sourceTree = "<group>";
@@ -198,6 +201,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5540102729A8C7040023AD38 /* ContactListCell.swift in Sources */,
 				554FB91029A775F800EAA48C /* ContactListViewController.swift in Sources */,
 				554FB90C29A775F800EAA48C /* AppDelegate.swift in Sources */,
 				554FB92A29A77F0F00EAA48C /* ContactService.swift in Sources */,

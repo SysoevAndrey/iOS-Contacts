@@ -8,7 +8,7 @@
 import UIKit
 
 final class SplashViewController: UIViewController {
-    // Layout
+    // MARK: - Layout
     
     private let logo: UIImageView = {
         let imageView = UIImageView()
@@ -29,11 +29,11 @@ final class SplashViewController: UIViewController {
         return button
     }()
     
-    // Properties
+    // MARK: - Properties
     
     private var contactService: ContactLoading = ContactService()
     
-    // Lifecycle
+    // MARK: - Lifecycle
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -49,7 +49,7 @@ final class SplashViewController: UIViewController {
         }
     }
     
-    // Actions
+    // MARK: - Actions
     
     @objc private func goToSettings() {
         if let appSettings = URL(string: UIApplication.openSettingsURLString) {
