@@ -32,6 +32,6 @@ enum Social: String, Comparable {
             .threema: 4
         ]
         
-        return order[rhs] ?? -1 < order[lhs] ?? -1
+        return order[lhs] ?? -1 < order[rhs] ?? -1
     }
 }

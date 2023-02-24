@@ -74,17 +74,19 @@ final class ContactListCell: UITableViewCell {
         contactNameLabel.text = "\(contact.givenName) \(contact.familyName)"
         contactPhoneLabel.text = contact.phone
         
-        Array(contact.socials).sorted().forEach { social in
-            let image = UIImage(named: social.rawValue)
-            contactSocialsStack.insertArrangedSubview(UIImageView(image: image), at: 0)
+        let sortedSocials = Array(contact.socials).sorted()
+        
+        sortedSocials.forEach { social in
+            let image = UIImage(named: "\(social.rawValue)\(contactSocialsStack.arrangedSubviews.count == 0 ? "" : "Hidden")")
+            contactSocialsStack.addArrangedSubview(UIImageView(image: image))
         }
         
         if contact.phone != nil {
-            contactSocialsStack.addArrangedSubview(UIImageView(image: UIImage(named: "Phone")))
+            contactSocialsStack.addArrangedSubview(UIImageView(image: UIImage(named: "Phone\(contactSocialsStack.arrangedSubviews.count == 0 ? "" : "Hidden")")))
         }
         
         if contact.email != nil {
-            contactSocialsStack.addArrangedSubview(UIImageView(image: UIImage(named: "Email")))
+            contactSocialsStack.addArrangedSubview(UIImageView(image: UIImage(named: "Email\(contactSocialsStack.arrangedSubviews.count == 0 ? "" : "Hidden")")))
         }
     }
 }
