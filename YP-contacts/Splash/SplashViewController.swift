@@ -17,13 +17,7 @@ final class SplashViewController: UIViewController {
         return imageView
     }()
     private lazy var getContactsButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .blue
-        button.setTitle("Хочу увидеть свои контакты", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        button.layer.cornerRadius = 24
+        let button = Button(color: .blue, title: "Хочу увидеть свои контакты")
         button.addTarget(self, action: #selector(goToSettings), for: .touchUpInside)
         button.isHidden = true
         return button

@@ -17,6 +17,7 @@
 		554FB92729A77E9900EAA48C /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554FB92629A77E9900EAA48C /* SplashViewController.swift */; };
 		554FB92A29A77F0F00EAA48C /* ContactService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554FB92929A77F0F00EAA48C /* ContactService.swift */; };
 		554FB92D29A77FEE00EAA48C /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554FB92C29A77FEE00EAA48C /* Contact.swift */; };
+		556D225B29AA401F00BA7EBA /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556D225A29AA401F00BA7EBA /* Button.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		554FB92629A77E9900EAA48C /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		554FB92929A77F0F00EAA48C /* ContactService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactService.swift; sourceTree = "<group>"; };
 		554FB92C29A77FEE00EAA48C /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
+		556D225A29AA401F00BA7EBA /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 		554FB90A29A775F800EAA48C /* YP-contacts */ = {
 			isa = PBXGroup;
 			children = (
+				556D225C29AA434700BA7EBA /* Components */,
 				554FB92529A77E7900EAA48C /* Splash */,
 				554FB92429A77E4200EAA48C /* ContactList */,
 				554FB92B29A77FE200EAA48C /* Models */,
@@ -125,6 +128,14 @@
 				554FB92C29A77FEE00EAA48C /* Contact.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		556D225C29AA434700BA7EBA /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				556D225A29AA401F00BA7EBA /* Button.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -204,6 +215,7 @@
 				554FB90E29A775F800EAA48C /* SceneDelegate.swift in Sources */,
 				554FB92329A77A0B00EAA48C /* UIColor+Extensions.swift in Sources */,
 				554FB92729A77E9900EAA48C /* SplashViewController.swift in Sources */,
+				556D225B29AA401F00BA7EBA /* Button.swift in Sources */,
 				554FB92D29A77FEE00EAA48C /* Contact.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
