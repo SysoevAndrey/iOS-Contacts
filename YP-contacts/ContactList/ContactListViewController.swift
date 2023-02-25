@@ -36,6 +36,7 @@ class ContactListViewController: UIViewController {
         table.separatorStyle = .none
         table.backgroundColor = .fullBlack
         table.contentInset = UIEdgeInsets(top: 22, left: 0, bottom: 0, right: 0)
+        table.register(ContactListCell.self, forCellReuseIdentifier: ContactListCell.reuseIdentifier)
         return table
     }()
     
@@ -50,7 +51,7 @@ class ContactListViewController: UIViewController {
         super.viewDidLoad()
         
         contactsTable.dataSource = self
-        contactsTable.register(ContactListCell.self, forCellReuseIdentifier: ContactListCell.reuseIdentifier)
+        contactsTable.delegate = self
         
         setupContent()
         setupConstraints()
@@ -124,5 +125,37 @@ extension ContactListViewController: UITableViewDataSource {
         contactListCell.configureCell(with: contact)
         
         return contactListCell
+    }
+}
+
+extension ContactListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(
+            style: .destructive,
+            title: "Удалить") { [weak self] _, _, completion in
+                let alert = UIAlertController(
+                    title: nil,
+                    message: "Уверены что хотите удалить контакт?",
+                    preferredStyle: .actionSheet)
+
+                let confirmAction = UIAlertAction(title: "Удалить", style: .destructive) { _ in
+                    self?.contacts.remove(at: indexPath.row)
+                    self?.contactsTable.deleteRows(at: [indexPath], with: .automatic)
+                    completion(false)
+                }
+
+                let cancelAction = UIAlertAction(title: "Отменить", style: .cancel) { _ in
+                    completion(true)
+                }
+
+                alert.addAction(confirmAction)
+                alert.addAction(cancelAction)
+
+                self?.present(alert, animated: true)
+            }
+
+        deleteAction.backgroundColor = .red
+
+        return UISwipeActionsConfiguration(actions: [deleteAction])
     }
 }
