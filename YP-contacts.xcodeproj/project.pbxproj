@@ -18,6 +18,9 @@
 		554FB92A29A77F0F00EAA48C /* ContactService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554FB92929A77F0F00EAA48C /* ContactService.swift */; };
 		554FB92D29A77FEE00EAA48C /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554FB92C29A77FEE00EAA48C /* Contact.swift */; };
 		556D225B29AA401F00BA7EBA /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556D225A29AA401F00BA7EBA /* Button.swift */; };
+		556D225F29AA43A100BA7EBA /* SortViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556D225E29AA43A100BA7EBA /* SortViewController.swift */; };
+		556D226129AA490600BA7EBA /* Sort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556D226029AA490600BA7EBA /* Sort.swift */; };
+		556D226329AA4B4600BA7EBA /* SortCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556D226229AA4B4600BA7EBA /* SortCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +37,9 @@
 		554FB92929A77F0F00EAA48C /* ContactService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactService.swift; sourceTree = "<group>"; };
 		554FB92C29A77FEE00EAA48C /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		556D225A29AA401F00BA7EBA /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
+		556D225E29AA43A100BA7EBA /* SortViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortViewController.swift; sourceTree = "<group>"; };
+		556D226029AA490600BA7EBA /* Sort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sort.swift; sourceTree = "<group>"; };
+		556D226229AA4B4600BA7EBA /* SortCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,8 +75,9 @@
 				556D225C29AA434700BA7EBA /* Components */,
 				554FB92529A77E7900EAA48C /* Splash */,
 				554FB92429A77E4200EAA48C /* ContactList */,
-				554FB92B29A77FE200EAA48C /* Models */,
+				556D225D29AA438600BA7EBA /* EditList */,
 				554FB92829A77EFD00EAA48C /* Services */,
+				554FB92B29A77FE200EAA48C /* Models */,
 				554FB90B29A775F800EAA48C /* AppDelegate.swift */,
 				554FB90D29A775F800EAA48C /* SceneDelegate.swift */,
 				554FB92129A7796700EAA48C /* Helpers */,
@@ -126,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				554FB92C29A77FEE00EAA48C /* Contact.swift */,
+				556D226029AA490600BA7EBA /* Sort.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -136,6 +144,15 @@
 				556D225A29AA401F00BA7EBA /* Button.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		556D225D29AA438600BA7EBA /* EditList */ = {
+			isa = PBXGroup;
+			children = (
+				556D225E29AA43A100BA7EBA /* SortViewController.swift */,
+				556D226229AA4B4600BA7EBA /* SortCell.swift */,
+			);
+			path = EditList;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -208,12 +225,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				556D225F29AA43A100BA7EBA /* SortViewController.swift in Sources */,
+				556D226329AA4B4600BA7EBA /* SortCell.swift in Sources */,
 				5540102729A8C7040023AD38 /* ContactListCell.swift in Sources */,
 				554FB91029A775F800EAA48C /* ContactListViewController.swift in Sources */,
 				554FB90C29A775F800EAA48C /* AppDelegate.swift in Sources */,
 				554FB92A29A77F0F00EAA48C /* ContactService.swift in Sources */,
 				554FB90E29A775F800EAA48C /* SceneDelegate.swift in Sources */,
 				554FB92329A77A0B00EAA48C /* UIColor+Extensions.swift in Sources */,
+				556D226129AA490600BA7EBA /* Sort.swift in Sources */,
 				554FB92729A77E9900EAA48C /* SplashViewController.swift in Sources */,
 				556D225B29AA401F00BA7EBA /* Button.swift in Sources */,
 				554FB92D29A77FEE00EAA48C /* Contact.swift in Sources */,

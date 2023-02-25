@@ -9,13 +9,17 @@ import Contacts
 import UIKit
 
 protocol ContactLoading {
+    var appliedSort: Sort? { get }
+    
     func requestAccess(completion: @escaping (Bool) -> Void)
     func loadContacts(completion: @escaping ([Contact]) -> Void)
     func deleteContact(at index: Int, completion: ([Contact]) -> Void)
+    func applySort(_ sort: Sort?)
 }
 
 final class ContactService: ContactLoading {
     private let store = CNContactStore()
+    private(set) var appliedSort: Sort?
     private var contacts: [Contact] = []
     
     func requestAccess(completion: @escaping (Bool) -> Void) {
@@ -91,5 +95,9 @@ final class ContactService: ContactLoading {
     func deleteContact(at index: Int, completion: ([Contact]) -> Void) {
         contacts.remove(at: index)
         completion(contacts)
+    }
+    
+    func applySort(_ sort: Sort?) {
+        appliedSort = sort
     }
 }

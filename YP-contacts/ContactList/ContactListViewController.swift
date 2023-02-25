@@ -22,6 +22,7 @@ class ContactListViewController: UIViewController {
         let button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(named: "Sort"), for: .normal)
+        button.addTarget(self, action: #selector(didTapSortButton), for: .touchUpInside)
         return button
     }()
     private lazy var filterButton: UIButton = {
@@ -66,6 +67,13 @@ class ContactListViewController: UIViewController {
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         .lightContent
+    }
+    
+    // MARK: - Methods
+    
+    @objc private func didTapSortButton() {
+        let sortViewController = SortViewController()
+        present(sortViewController, animated: true)
     }
 }
 

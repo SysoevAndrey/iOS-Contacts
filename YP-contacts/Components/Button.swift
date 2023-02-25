@@ -7,7 +7,7 @@
 
 import UIKit
 
-class Button: UIButton {
+final class Button: UIButton {
     convenience init(color: UIColor, title: String) {
         self.init(type: .custom)
         
