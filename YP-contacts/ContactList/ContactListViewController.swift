@@ -43,7 +43,7 @@ class ContactListViewController: UIViewController {
     // MARK: - Properties
     
     private let contactService: ContactLoading = ContactService()
-    private var contacts = [Contact]()
+    private var contacts: [Contact] = []
     
     // MARK: - Lifecycle
 
@@ -139,9 +139,13 @@ extension ContactListViewController: UITableViewDelegate {
                     preferredStyle: .actionSheet)
 
                 let confirmAction = UIAlertAction(title: "Удалить", style: .destructive) { _ in
-                    self?.contacts.remove(at: indexPath.row)
-                    self?.contactsTable.deleteRows(at: [indexPath], with: .automatic)
-                    completion(false)
+                    guard let self else { return }
+                    self.contactService.deleteContact(at: indexPath.row) { contacts in
+                        self.contacts = contacts
+                        self.contactsTable.deleteRows(at: [indexPath], with: .automatic)
+                        completion(false)
+                    }
+//                    self?.contacts.remove(at: indexPath.row)
                 }
 
                 let cancelAction = UIAlertAction(title: "Отменить", style: .cancel) { _ in

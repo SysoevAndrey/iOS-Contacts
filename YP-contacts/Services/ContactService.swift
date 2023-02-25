@@ -11,10 +11,12 @@ import UIKit
 protocol ContactLoading {
     func requestAccess(completion: @escaping (Bool) -> Void)
     func loadContacts(completion: @escaping ([Contact]) -> Void)
+    func deleteContact(at index: Int, completion: ([Contact]) -> Void)
 }
 
-struct ContactService: ContactLoading {
+final class ContactService: ContactLoading {
     private let store = CNContactStore()
+    private var contacts: [Contact] = []
     
     func requestAccess(completion: @escaping (Bool) -> Void) {
         store.requestAccess(for: .contacts) { isGranted, _ in
@@ -34,10 +36,11 @@ struct ContactService: ContactLoading {
             CNContactSocialProfilesKey
         ] as [CNKeyDescriptor])
         
-        DispatchQueue.global().async {
+        DispatchQueue.global().async { [weak self] in
+            guard let self else { return }
             do {
                 var cnContacts = [CNContact]()
-                try store.enumerateContacts(with: request, usingBlock: { contact, _ in
+                try self.store.enumerateContacts(with: request, usingBlock: { contact, _ in
                     cnContacts.append(contact)
                 })
                 let contacts = cnContacts.map { cnContact in
@@ -72,6 +75,8 @@ struct ContactService: ContactLoading {
                     )
                 }
                 
+                self.contacts = contacts
+                
                 DispatchQueue.main.async {
                     completion(contacts)
                 }
@@ -81,5 +86,10 @@ struct ContactService: ContactLoading {
                 }
             }
         }
+    }
+    
+    func deleteContact(at index: Int, completion: ([Contact]) -> Void) {
+        contacts.remove(at: index)
+        completion(contacts)
     }
 }
