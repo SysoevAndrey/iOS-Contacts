@@ -22,6 +22,10 @@
 		556D226129AA490600BA7EBA /* Sort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556D226029AA490600BA7EBA /* Sort.swift */; };
 		556D226329AA4B4600BA7EBA /* SortCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556D226229AA4B4600BA7EBA /* SortCell.swift */; };
 		5576353C29AB354F00917099 /* CapsuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5576353B29AB354F00917099 /* CapsuleView.swift */; };
+		5576354029AB3AAB00917099 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5576353F29AB3AAB00917099 /* FilterViewController.swift */; };
+		5576354229AB3BEB00917099 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5576354129AB3BEB00917099 /* Filter.swift */; };
+		5576354429AB45F500917099 /* FilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5576354329AB45F500917099 /* FilterCell.swift */; };
+		5576354629ABAA7D00917099 /* ApplyAllCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5576354529ABAA7D00917099 /* ApplyAllCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +46,10 @@
 		556D226029AA490600BA7EBA /* Sort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sort.swift; sourceTree = "<group>"; };
 		556D226229AA4B4600BA7EBA /* SortCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortCell.swift; sourceTree = "<group>"; };
 		5576353B29AB354F00917099 /* CapsuleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleView.swift; sourceTree = "<group>"; };
+		5576353F29AB3AAB00917099 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
+		5576354129AB3BEB00917099 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
+		5576354329AB45F500917099 /* FilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCell.swift; sourceTree = "<group>"; };
+		5576354529ABAA7D00917099 /* ApplyAllCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyAllCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +86,7 @@
 				554FB92529A77E7900EAA48C /* Splash */,
 				554FB92429A77E4200EAA48C /* ContactList */,
 				556D225D29AA438600BA7EBA /* Sort */,
+				5576353E29AB39C300917099 /* Filter */,
 				554FB92829A77EFD00EAA48C /* Services */,
 				554FB92B29A77FE200EAA48C /* Models */,
 				554FB90B29A775F800EAA48C /* AppDelegate.swift */,
@@ -136,6 +145,7 @@
 			children = (
 				554FB92C29A77FEE00EAA48C /* Contact.swift */,
 				556D226029AA490600BA7EBA /* Sort.swift */,
+				5576354129AB3BEB00917099 /* Filter.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -156,6 +166,16 @@
 				556D226229AA4B4600BA7EBA /* SortCell.swift */,
 			);
 			path = Sort;
+			sourceTree = "<group>";
+		};
+		5576353E29AB39C300917099 /* Filter */ = {
+			isa = PBXGroup;
+			children = (
+				5576353F29AB3AAB00917099 /* FilterViewController.swift */,
+				5576354329AB45F500917099 /* FilterCell.swift */,
+				5576354529ABAA7D00917099 /* ApplyAllCell.swift */,
+			);
+			path = Filter;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -228,6 +248,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5576354029AB3AAB00917099 /* FilterViewController.swift in Sources */,
+				5576354429AB45F500917099 /* FilterCell.swift in Sources */,
+				5576354229AB3BEB00917099 /* Filter.swift in Sources */,
 				556D225F29AA43A100BA7EBA /* SortViewController.swift in Sources */,
 				556D226329AA4B4600BA7EBA /* SortCell.swift in Sources */,
 				5540102729A8C7040023AD38 /* ContactListCell.swift in Sources */,
@@ -238,6 +261,7 @@
 				554FB92329A77A0B00EAA48C /* UIColor+Extensions.swift in Sources */,
 				556D226129AA490600BA7EBA /* Sort.swift in Sources */,
 				554FB92729A77E9900EAA48C /* SplashViewController.swift in Sources */,
+				5576354629ABAA7D00917099 /* ApplyAllCell.swift in Sources */,
 				556D225B29AA401F00BA7EBA /* Button.swift in Sources */,
 				5576353C29AB354F00917099 /* CapsuleView.swift in Sources */,
 				554FB92D29A77FEE00EAA48C /* Contact.swift in Sources */,

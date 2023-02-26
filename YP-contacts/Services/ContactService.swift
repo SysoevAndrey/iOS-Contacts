@@ -10,17 +10,20 @@ import UIKit
 
 protocol ContactLoading {
     var appliedSort: Sort? { get }
+    var appliedFilters: Set<Filter> { get }
     
     func requestAccess(completion: @escaping (Bool) -> Void)
     func loadContacts(completion: @escaping ([Contact]) -> Void)
     func deleteContact(at index: Int, completion: ([Contact]) -> Void)
     func applySort(_ sort: Sort?, completion: ([Contact]) -> Void)
+    func applyFilters(_ filters: Set<Filter>, completion: ([Contact]) -> Void)
 }
 
 final class ContactService: ContactLoading {
     static let shared = ContactService()
     private let store = CNContactStore()
     private(set) var appliedSort: Sort?
+    private(set) var appliedFilters: Set<Filter> = []
     private var contacts: [Contact] = []
     
     private init() {}
@@ -61,10 +64,6 @@ final class ContactService: ContactLoading {
                         image = UIImage(named: "AvatarPlaceholder") ?? UIImage()
                     }
                     
-                    let phone: String? = cnContact.phoneNumbers.first?.value.stringValue
-                    
-                    let email: String? = cnContact.emailAddresses.first?.value as String?
-                    
                     var socials: Set<Social> = []
                     cnContact.socialProfiles.forEach { profile in
                         if let value = Social(rawValue: profile.value.service) {
@@ -72,12 +71,21 @@ final class ContactService: ContactLoading {
                         }
                     }
                     
+                    let phone: String? = cnContact.phoneNumbers.first?.value.stringValue
+                    
+                    if phone != nil {
+                        socials.insert(.phone)
+                    }
+                    
+                    if let _ = cnContact.emailAddresses.first?.value {
+                        socials.insert(.email)
+                    }
+                    
                     return Contact(
                         givenName: cnContact.givenName,
                         familyName: cnContact.familyName,
                         image: image,
                         phone: phone,
-                        email: email,
                         socials: socials
                     )
                 }
@@ -103,12 +111,29 @@ final class ContactService: ContactLoading {
     func applySort(_ sort: Sort?, completion: ([Contact]) -> Void) {
         appliedSort = sort
         
+        let sorted = applySortAndFilters(to: contacts)
+        
+        completion(sorted)
+    }
+    
+    func applyFilters(_ filters: Set<Filter>, completion: ([Contact]) -> Void) {
+        self.appliedFilters = filters
+        
+        let filtered = applySortAndFilters(to: contacts)
+        
+        completion(filtered)
+    }
+    
+    private func applySortAndFilters(to contacts: [Contact]) -> [Contact] {
+        sortContacts(filterContacts(contacts, by: appliedFilters), by: appliedSort)
+    }
+    
+    private func sortContacts(_ contacts: [Contact], by sort: Sort?) -> [Contact] {
         guard let sort else {
-            completion(contacts)
-            return
+            return contacts
         }
         
-        let sorted = contacts.sorted { first, second in
+        return contacts.sorted { first, second in
             switch sort.value {
             case .givenName:
                 switch sort.direction {
@@ -126,7 +151,17 @@ final class ContactService: ContactLoading {
                 }
             }
         }
+    }
+    
+    private func filterContacts(_ contacts: [Contact], by filters: Set<Filter>) -> [Contact] {
+        if filters.isEmpty {
+            return contacts
+        }
         
-        completion(sorted)
+        return contacts.filter { contact in
+            filters.allSatisfy { filter in
+                contact.socials.contains(filter.value)
+            }
+        }
     }
 }

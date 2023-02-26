@@ -74,14 +74,6 @@ final class ContactListCell: UITableViewCell {
             let image = UIImage(named: "\(social.rawValue)\(contactSocialsStack.arrangedSubviews.count == 0 ? "" : "Hidden")")
             contactSocialsStack.addArrangedSubview(UIImageView(image: image))
         }
-        
-        if contact.phone != nil {
-            contactSocialsStack.addArrangedSubview(UIImageView(image: UIImage(named: "Phone\(contactSocialsStack.arrangedSubviews.count == 0 ? "" : "Hidden")")))
-        }
-        
-        if contact.email != nil {
-            contactSocialsStack.addArrangedSubview(UIImageView(image: UIImage(named: "Email\(contactSocialsStack.arrangedSubviews.count == 0 ? "" : "Hidden")")))
-        }
     }
 }
 

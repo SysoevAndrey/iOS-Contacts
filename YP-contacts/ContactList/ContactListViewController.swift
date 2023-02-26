@@ -29,6 +29,7 @@ class ContactListViewController: UIViewController {
         let button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(named: "Filter"), for: .normal)
+        button.addTarget(self, action: #selector(didTapFilterButton), for: .touchUpInside)
         return button
     }()
     private let contactsTable: UITableView = {
@@ -75,6 +76,12 @@ class ContactListViewController: UIViewController {
         let sortViewController = SortViewController()
         sortViewController.delegate = self
         present(sortViewController, animated: true)
+    }
+    
+    @objc private func didTapFilterButton() {
+        let filterViewController = FilterViewController()
+        filterViewController.delegate = self
+        present(filterViewController, animated: true)
     }
 }
 
@@ -174,6 +181,8 @@ extension ContactListViewController: UITableViewDelegate {
     }
 }
 
+// MARK: - SortViewControllerDelegate
+
 extension ContactListViewController: SortViewControllerDelegate {
     func sortViewControllerDidApplySort(_ vc: SortViewController, sort: Sort?) {
         contactService.applySort(sort) { [weak self] contacts in
@@ -186,6 +195,25 @@ extension ContactListViewController: SortViewControllerDelegate {
                 sortButton.setImage(UIImage(named: "SortActive"), for: .normal)
             } else {
                 sortButton.setImage(UIImage(named: "Sort"), for: .normal)
+            }
+            
+            dismiss(animated: true)
+        }
+    }
+}
+
+extension ContactListViewController: FilterViewControllerDelegate {
+    func filterViewControllerDidApplyFilters(_ vc: FilterViewController, filters: Set<Filter>) {
+        contactService.applyFilters(filters) { [weak self] contacts in
+            guard let self else { return }
+            
+            self.contacts = contacts
+            contactsTable.reloadData()
+            
+            if !filters.isEmpty {
+                filterButton.setImage(UIImage(named: "FilterActive"), for: .normal)
+            } else {
+                filterButton.setImage(UIImage(named: "Filter"), for: .normal)
             }
             
             dismiss(animated: true)
