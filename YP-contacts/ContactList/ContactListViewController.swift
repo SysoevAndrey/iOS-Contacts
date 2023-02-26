@@ -41,11 +41,31 @@ class ContactListViewController: UIViewController {
         table.register(ContactListCell.self, forCellReuseIdentifier: ContactListCell.reuseIdentifier)
         return table
     }()
+    private let emptyListLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        label.textColor = .white
+        label.text = "Таких контактов нет, выберите другие фильтры"
+        label.textAlignment = .center
+        label.numberOfLines = 2
+        return label
+    }()
     
     // MARK: - Properties
     
     private let contactService: ContactLoading = ContactService.shared
-    private var contacts: [Contact] = []
+    private var contacts: [Contact] = [] {
+        willSet {
+            if newValue.isEmpty {
+                emptyListLabel.isHidden = false
+                contactsTable.isHidden = true
+            } else {
+                emptyListLabel.isHidden = true
+                contactsTable.isHidden = false
+            }
+        }
+    }
     
     // MARK: - Lifecycle
 
@@ -92,6 +112,7 @@ private extension ContactListViewController {
         view.addSubview(sortButton)
         view.addSubview(filterButton)
         view.addSubview(contactsTable)
+        view.addSubview(emptyListLabel)
     }
     
     func setupConstraints() {
@@ -113,12 +134,18 @@ private extension ContactListViewController {
             contactsTable.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             contactsTable.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ]
+        let emptyListLabelConstraints = [
+            emptyListLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            emptyListLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            emptyListLabel.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
+        ]
         
         NSLayoutConstraint.activate(
             contactsLabelConstraints +
             sortButtonConstraints +
             filterButtonConstraints +
-            contactsTableConstraints
+            contactsTableConstraints +
+            emptyListLabelConstraints
         )
     }
 }

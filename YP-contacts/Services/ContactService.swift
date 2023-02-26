@@ -104,8 +104,17 @@ final class ContactService: ContactLoading {
     }
     
     func deleteContact(at index: Int, completion: ([Contact]) -> Void) {
-        contacts.remove(at: index)
-        completion(contacts)
+        var sortedAndFilteredContacts = applySortAndFilters(to: contacts)
+        let contactToDelete = sortedAndFilteredContacts[index]
+        
+        guard let indexInContacts = contacts.firstIndex(of: contactToDelete) else { return }
+        
+        let indexToDelete = contacts.distance(from: contacts.startIndex, to: indexInContacts )
+
+        sortedAndFilteredContacts.remove(at: index)
+        contacts.remove(at: indexToDelete)
+        
+        completion(sortedAndFilteredContacts)
     }
     
     func applySort(_ sort: Sort?, completion: ([Contact]) -> Void) {
