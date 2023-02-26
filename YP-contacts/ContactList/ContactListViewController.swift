@@ -178,8 +178,16 @@ extension ContactListViewController: SortViewControllerDelegate {
     func sortViewControllerDidApplySort(_ vc: SortViewController, sort: Sort?) {
         contactService.applySort(sort) { [weak self] contacts in
             guard let self else { return }
+            
             self.contacts = contacts
             contactsTable.reloadData()
+            
+            if sort != nil {
+                sortButton.setImage(UIImage(named: "SortActive"), for: .normal)
+            } else {
+                sortButton.setImage(UIImage(named: "Sort"), for: .normal)
+            }
+            
             dismiss(animated: true)
         }
     }
