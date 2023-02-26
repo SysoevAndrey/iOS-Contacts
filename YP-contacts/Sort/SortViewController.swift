@@ -7,7 +7,11 @@
 
 import UIKit
 
-class SortViewController: UIViewController {
+protocol SortViewControllerDelegate: AnyObject {
+    func sortViewControllerDidApplySort(_ vc: SortViewController, sort: Sort?)
+}
+
+final class SortViewController: UIViewController {
     // MARK: - Layout
     
     private let sortsTable: UITableView = {
@@ -15,6 +19,7 @@ class SortViewController: UIViewController {
         table.translatesAutoresizingMaskIntoConstraints = false
         table.backgroundColor = .fullBlack
         table.separatorStyle = .none
+        table.alwaysBounceVertical = false
         table.register(SortCell.self, forCellReuseIdentifier: SortCell.reuseIdentifier)
         return table
     }()
@@ -30,21 +35,37 @@ class SortViewController: UIViewController {
         button.addTarget(self, action: #selector(didTapResetButton), for: .touchUpInside)
         return button
     }()
-    private let applyButton: UIButton = {
+    private lazy var applyButton: UIButton = {
         let button = Button(color: .blue, title: "Применить")
+        button.addTarget(self, action: #selector(didTapApplyButton), for: .touchUpInside)
         return button
     }()
     
     // MARK: - Properties
     
-    private let contactService: ContactLoading = ContactService()
+    weak var delegate: SortViewControllerDelegate?
+    private let contactService: ContactLoading = ContactService.shared
     private let sorts: [Sort] = [
-        Sort(name: "По имени (А-Я / A-Z)", direction: .ascending),
-        Sort(name: "По имени (Я-А / Z-A)", direction: .descending),
-        Sort(name: "По фамилии (А-Я / A-Z)", direction: .ascending),
-        Sort(name: "По фамилии (Я-А / Z-A)", direction: .descending),
+        Sort(value: .givenName, direction: .ascending),
+        Sort(value: .givenName, direction: .descending),
+        Sort(value: .familyName, direction: .ascending),
+        Sort(value: .familyName, direction: .descending)
     ]
-    private var appliedSort: Sort?
+    private var initialSort: Sort?
+    private var appliedSort: Sort? {
+        willSet {
+            UIView.animate(withDuration: 0.2, delay: 0) { [weak self] in
+                guard let self else { return }
+                if newValue == self.initialSort {
+                    self.applyButton.backgroundColor = .gray
+                    self.applyButton.isEnabled = false
+                } else {
+                    self.applyButton.backgroundColor = .blue
+                    self.applyButton.isEnabled = true
+                }
+            }
+        }
+    }
     
     // MARK: - Lifecycle
 
@@ -53,6 +74,7 @@ class SortViewController: UIViewController {
         
         sortsTable.dataSource = self
         
+        initialSort = contactService.appliedSort
         appliedSort = contactService.appliedSort
         
         setupContent()
@@ -68,6 +90,10 @@ class SortViewController: UIViewController {
         }
         
         appliedSort = nil
+    }
+    
+    @objc private func didTapApplyButton() {
+        delegate?.sortViewControllerDidApplySort(self, sort: appliedSort)
     }
 }
 
@@ -111,7 +137,7 @@ extension SortViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        sortCell.configureCell(with: sorts[indexPath.row], isApplied: sorts[indexPath.row].name == appliedSort?.name)
+        sortCell.configureCell(with: sorts[indexPath.row], isApplied: sorts[indexPath.row].label == appliedSort?.label)
         sortCell.delegate = self
         
         return sortCell

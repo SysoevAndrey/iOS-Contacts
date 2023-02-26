@@ -25,7 +25,7 @@ final class SplashViewController: UIViewController {
     
     // MARK: - Properties
     
-    private var contactService: ContactLoading = ContactService()
+    private var contactService: ContactLoading = ContactService.shared
     
     // MARK: - Lifecycle
     

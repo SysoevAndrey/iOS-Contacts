@@ -14,13 +14,16 @@ protocol ContactLoading {
     func requestAccess(completion: @escaping (Bool) -> Void)
     func loadContacts(completion: @escaping ([Contact]) -> Void)
     func deleteContact(at index: Int, completion: ([Contact]) -> Void)
-    func applySort(_ sort: Sort?)
+    func applySort(_ sort: Sort?, completion: ([Contact]) -> Void)
 }
 
 final class ContactService: ContactLoading {
+    static let shared = ContactService()
     private let store = CNContactStore()
     private(set) var appliedSort: Sort?
     private var contacts: [Contact] = []
+    
+    private init() {}
     
     func requestAccess(completion: @escaping (Bool) -> Void) {
         store.requestAccess(for: .contacts) { isGranted, _ in
@@ -97,7 +100,33 @@ final class ContactService: ContactLoading {
         completion(contacts)
     }
     
-    func applySort(_ sort: Sort?) {
+    func applySort(_ sort: Sort?, completion: ([Contact]) -> Void) {
         appliedSort = sort
+        
+        guard let sort else {
+            completion(contacts)
+            return
+        }
+        
+        let sorted = contacts.sorted { first, second in
+            switch sort.value {
+            case .givenName:
+                switch sort.direction {
+                case .ascending:
+                    return first.givenName < second.givenName
+                case .descending:
+                    return first.givenName > second.givenName
+                }
+            case .familyName:
+                switch sort.direction {
+                case .ascending:
+                    return first.familyName < second.familyName
+                case .descending:
+                    return first.familyName > second.familyName
+                }
+            }
+        }
+        
+        completion(sorted)
     }
 }

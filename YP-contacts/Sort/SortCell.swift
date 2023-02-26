@@ -62,7 +62,7 @@ final class SortCell: UITableViewCell {
     
     func configureCell(with sort: Sort, isApplied: Bool) {
         self.sort = sort
-        sortLabel.text = sort.name
+        sortLabel.text = sort.label
         toggleButton(to: isApplied)
     }
     

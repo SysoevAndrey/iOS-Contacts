@@ -75,7 +75,7 @@
 				556D225C29AA434700BA7EBA /* Components */,
 				554FB92529A77E7900EAA48C /* Splash */,
 				554FB92429A77E4200EAA48C /* ContactList */,
-				556D225D29AA438600BA7EBA /* EditList */,
+				556D225D29AA438600BA7EBA /* Sort */,
 				554FB92829A77EFD00EAA48C /* Services */,
 				554FB92B29A77FE200EAA48C /* Models */,
 				554FB90B29A775F800EAA48C /* AppDelegate.swift */,
@@ -146,13 +146,13 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
-		556D225D29AA438600BA7EBA /* EditList */ = {
+		556D225D29AA438600BA7EBA /* Sort */ = {
 			isa = PBXGroup;
 			children = (
 				556D225E29AA43A100BA7EBA /* SortViewController.swift */,
 				556D226229AA4B4600BA7EBA /* SortCell.swift */,
 			);
-			path = EditList;
+			path = Sort;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

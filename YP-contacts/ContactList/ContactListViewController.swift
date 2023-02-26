@@ -43,7 +43,7 @@ class ContactListViewController: UIViewController {
     
     // MARK: - Properties
     
-    private let contactService: ContactLoading = ContactService()
+    private let contactService: ContactLoading = ContactService.shared
     private var contacts: [Contact] = []
     
     // MARK: - Lifecycle
@@ -73,6 +73,7 @@ class ContactListViewController: UIViewController {
     
     @objc private func didTapSortButton() {
         let sortViewController = SortViewController()
+        sortViewController.delegate = self
         present(sortViewController, animated: true)
     }
 }
@@ -136,6 +137,8 @@ extension ContactListViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - UITableViewDelegate
+
 extension ContactListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(
@@ -153,7 +156,6 @@ extension ContactListViewController: UITableViewDelegate {
                         self.contactsTable.deleteRows(at: [indexPath], with: .automatic)
                         completion(false)
                     }
-//                    self?.contacts.remove(at: indexPath.row)
                 }
 
                 let cancelAction = UIAlertAction(title: "Отменить", style: .cancel) { _ in
@@ -169,5 +171,16 @@ extension ContactListViewController: UITableViewDelegate {
         deleteAction.backgroundColor = .red
 
         return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
+}
+
+extension ContactListViewController: SortViewControllerDelegate {
+    func sortViewControllerDidApplySort(_ vc: SortViewController, sort: Sort?) {
+        contactService.applySort(sort) { [weak self] contacts in
+            guard let self else { return }
+            self.contacts = contacts
+            contactsTable.reloadData()
+            dismiss(animated: true)
+        }
     }
 }
