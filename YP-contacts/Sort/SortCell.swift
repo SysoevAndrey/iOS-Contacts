@@ -14,13 +14,7 @@ protocol SortCellDelegate: AnyObject {
 final class SortCell: UITableViewCell {
     // MARK: - Layout
     
-    private let capsuleView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.cornerRadius = 24
-        view.backgroundColor = .black
-        return view
-    }()
+    private let capsuleView: UIView = CapsuleView()
     private let sortLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false

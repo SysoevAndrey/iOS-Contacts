@@ -10,13 +10,7 @@ import UIKit
 final class ContactListCell: UITableViewCell {
     // MARK: - Layout
     
-    private let capsuleView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.cornerRadius = 24
-        view.backgroundColor = .black
-        return view
-    }()
+    private let capsuleView: UIView = CapsuleView()
     private let contactImage: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
