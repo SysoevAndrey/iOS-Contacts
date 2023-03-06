@@ -68,7 +68,7 @@ class ContactListViewController: UIViewController {
     }
     
     // MARK: - Lifecycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -174,6 +174,15 @@ extension ContactListViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 
 extension ContactListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, willBeginEditingRowAt indexPath: IndexPath) {
+        if let swipeContainerView = tableView.subviews.first(where: { String(describing: type(of: $0)) == "_UITableViewCellSwipeContainerView" }) {
+            if let swipeActionPullView = swipeContainerView.subviews.first, String(describing: type(of: swipeActionPullView)) == "UISwipeActionPullView" {
+                swipeActionPullView.layer.cornerRadius = 24
+                swipeActionPullView.layer.masksToBounds = true
+            }
+        }
+    }
+    
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(
             style: .destructive,
@@ -182,7 +191,7 @@ extension ContactListViewController: UITableViewDelegate {
                     title: nil,
                     message: "Уверены что хотите удалить контакт?",
                     preferredStyle: .actionSheet)
-
+                
                 let confirmAction = UIAlertAction(title: "Удалить", style: .destructive) { _ in
                     guard let self else { return }
                     self.contactService.deleteContact(at: indexPath.row) { contacts in
@@ -191,19 +200,19 @@ extension ContactListViewController: UITableViewDelegate {
                         completion(false)
                     }
                 }
-
+                
                 let cancelAction = UIAlertAction(title: "Отменить", style: .cancel) { _ in
                     completion(true)
                 }
-
+                
                 alert.addAction(confirmAction)
                 alert.addAction(cancelAction)
-
+                
                 self?.present(alert, animated: true)
             }
-
+        
         deleteAction.backgroundColor = .red
-
+        
         return UISwipeActionsConfiguration(actions: [deleteAction])
     }
 }
