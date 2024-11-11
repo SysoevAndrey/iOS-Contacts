@@ -50,6 +50,7 @@
 		5576354129AB3BEB00917099 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		5576354329AB45F500917099 /* FilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCell.swift; sourceTree = "<group>"; };
 		5576354529ABAA7D00917099 /* ApplyAllCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyAllCell.swift; sourceTree = "<group>"; };
+		55886BBF2CE2474C00CB1903 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +67,7 @@
 		554FB8FF29A775F800EAA48C = {
 			isa = PBXGroup;
 			children = (
+				55886BBF2CE2474C00CB1903 /* README.md */,
 				554FB90A29A775F800EAA48C /* YP-contacts */,
 				554FB90929A775F800EAA48C /* Products */,
 			);
